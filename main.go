@@ -1,41 +1,55 @@
 package main
 
-import "fmt"
+import (
+    "bufio"
+    "fmt"
+    "os"
+)
 
 func main() {
 
-    //file, err := os.Open("input.in")
-    //
-    //if err != nil {
-    //    log.Fatal(err)
-    //}
-    //defer file.Close()
-    //
-    //scanner := bufio.NewScanner(file)
-    //
-    //for scanner.Scan() {
-    //    sortPancakes(scanner.Text())
-    //}
+    fileLines := LinesInFile("input.in")
 
-
-    fmt.Println(sortPancakes("5"))
+    // Loop and output correct format to show example.
+    for i := 1; i < len(fileLines); i++ {
+        fmt.Printf("Case #%d: %d", i, FlipPancakesCount(fileLines[i]))
+        fmt.Println()
+    }
 }
 
+// Opens 'fileName' file and returns each line as a string array
+func LinesInFile(fileName string) []string {
+    f, _ := os.Open(fileName)
 
-func sortPancakes(pancakes string) int{
+    scanner := bufio.NewScanner(f)
+    result := []string{}
+    // Use Scan.
+    for scanner.Scan() {
+        line := scanner.Text()
+        // Append line to result.
+        result = append(result, line)
+    }
+    return result
+}
+
+// Returns the num of times needed to flip pancakes so they are right side up.
+func FlipPancakesCount(pancakes string) int{
 
     flipCount := 0
-    prev := pancakes[0]
+    prevPancake := pancakes[0]
 
     for i := range pancakes {
-        if pancakes[i] != prev {
+        currentPancake := pancakes[i]
+
+        // Flip all previous if different so that every pancake is aligned.
+        if prevPancake != currentPancake {
             flipCount++
-            prev = pancakes[i]
+            prevPancake = currentPancake
         }
     }
 
-
-    if prev != '+' {
+    // If the pancakes are all wrong side up then flip them all.
+    if prevPancake != '+' {
         flipCount++
     }
 
