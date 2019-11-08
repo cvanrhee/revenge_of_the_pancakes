@@ -41,7 +41,7 @@ func FlipPancakesCount(pancakes string) int{
     for i := range pancakes {
         currentPancake := pancakes[i]
 
-        // Flip all previous if different so that every pancake is aligned.
+        // Flip stack if different so that every pancake thus far is aligned.
         if prevPancake != currentPancake {
             flipCount++
             prevPancake = currentPancake
