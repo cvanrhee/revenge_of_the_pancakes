@@ -4,6 +4,7 @@ import (
     "bufio"
     "fmt"
     "os"
+    "regexp"
 )
 
 func main() {
@@ -32,8 +33,13 @@ func LinesInFile(fileName string) []string {
     return result
 }
 
-// Returns the num of times needed to flip pancakes so they are right side up.
+// Returns the num of times needed to flip pancakes so that they are all right side up.
 func FlipPancakesCount(pancakes string) int{
+
+    // If the string contains invalid characters return 0
+    if !IsValidPancake(pancakes) {
+        return 0
+    }
 
     flipCount := 0
     prevPancake := pancakes[0]
@@ -54,4 +60,11 @@ func FlipPancakesCount(pancakes string) int{
     }
 
     return flipCount
+}
+
+// Returns false if str contains any character other than '-' or '+'.
+func IsValidPancake(str string) bool {
+    containsInvalid, _ := regexp.MatchString(`[^\-+]`, str)
+
+    return !containsInvalid
 }

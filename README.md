@@ -5,7 +5,7 @@ Requirements:
 ### Getting Started
 run
 
-`` go build main.go``
+`` go run main.go``
 
 Test
 
